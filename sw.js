@@ -2,7 +2,6 @@ const CACHE_NAME = "serenity-bay-v5";
 const ASSETS = [
   "./index.html",
   "./css/style.min.css",
-  "./css/fonts.css",
   "./js/main.js",
   "./assets/icons/monogram.svg",
   "./assets/fonts/PlayfairDisplay-Regular-Latin.woff2",

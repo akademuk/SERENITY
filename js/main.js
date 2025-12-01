@@ -35,17 +35,17 @@ document.addEventListener("DOMContentLoaded", () => {
     ".btn, .play-btn-large, .cartography__hotspot"
   );
   magneticBtns.forEach((btn) => {
-    let rect = btn.getBoundingClientRect();
+    let rect = null;
 
-    btn.addEventListener("mouseenter", () => {
+    const updateRect = () => {
       rect = btn.getBoundingClientRect();
-    });
+    };
 
-    window.addEventListener("resize", () => {
-      rect = btn.getBoundingClientRect();
-    });
+    btn.addEventListener("mouseenter", updateRect);
+    window.addEventListener("resize", updateRect);
 
     btn.addEventListener("mousemove", (e) => {
+      if (!rect) updateRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
 
@@ -334,11 +334,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 4. Header Scroll Effect
   const header = document.querySelector(".header");
+  let isHeaderScrolled = false;
   window.addEventListener("scroll", () => {
     if (window.scrollY > 50) {
-      header.classList.add("scrolled");
+      if (!isHeaderScrolled) {
+        header.classList.add("scrolled");
+        isHeaderScrolled = true;
+      }
     } else {
-      header.classList.remove("scrolled");
+      if (isHeaderScrolled) {
+        header.classList.remove("scrolled");
+        isHeaderScrolled = false;
+      }
     }
   });
 
