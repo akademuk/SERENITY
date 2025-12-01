@@ -4,7 +4,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   // 0. Preloader
-  const loader = document.querySelector(".loader");
+  const loader = document.getElementById("loader");
   const loaderLogo = document.querySelector(".loader__logo");
   const loaderBar = document.querySelector(".loader__bar");
 
