@@ -1289,7 +1289,7 @@ ul {
   margin-bottom: 0.5rem;
 }
 
-.ritual-item h4 {
+.ritual-item h3 {
   font-family: var(--font-heading);
   font-size: 1.25rem; /* Slightly smaller to fit compact layout */
   margin-bottom: 0.25rem;
@@ -2329,7 +2329,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   }
 }
 
-.booking__perks h4 {
+.booking__perks h3 {
   text-transform: uppercase;
   letter-spacing: 0.2em;
   font-size: 0.85rem;

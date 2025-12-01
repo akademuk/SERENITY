@@ -353,17 +353,17 @@
               <div class="rituals__list">
                 <div class="ritual-item">
                   <span class="ritual-item__time">07:00</span>
-                  <h4>Sunrise Yoga Pavilion</h4>
+                  <h3>Sunrise Yoga Pavilion</h3>
                   <p>Guided breathwork facing the rising sun.</p>
                 </div>
                 <div class="ritual-item">
                   <span class="ritual-item__time">Anytime</span>
-                  <h4>24/7 Private Butler</h4>
+                  <h3>24/7 Private Butler</h3>
                   <p>Anticipating needs before they arise.</p>
                 </div>
                 <div class="ritual-item">
                   <span class="ritual-item__time">16:00</span>
-                  <h4>Hydrotherapy Circuit</h4>
+                  <h3>Hydrotherapy Circuit</h3>
                   <p>Contrast bathing in our cliffside pools.</p>
                 </div>
               </div>
@@ -1309,8 +1309,9 @@
             <form class="booking__form" id="bookingForm">
               <div class="form-row">
                 <div class="form-group">
-                  <label>Full Name</label>
+                  <label for="full-name">Full Name</label>
                   <input
+                    id="full-name"
                     type="text"
                     class="form-input"
                     placeholder="John Doe"
@@ -1318,8 +1319,9 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label>Email Address</label>
+                  <label for="email-address">Email Address</label>
                   <input
+                    id="email-address"
                     type="email"
                     class="form-input"
                     placeholder="john@example.com"
@@ -1329,8 +1331,9 @@
               </div>
               <div class="form-row">
                 <div class="form-group">
-                  <label>Phone Number</label>
+                  <label for="phone-number">Phone Number</label>
                   <input
+                    id="phone-number"
                     type="tel"
                     class="form-input"
                     placeholder="+1 (555) 000-0000"
@@ -1363,12 +1366,22 @@
               </div>
               <div class="form-row">
                 <div class="form-group">
-                  <label>Arrival</label>
-                  <input type="date" class="form-input" required />
+                  <label for="arrival-date">Arrival</label>
+                  <input
+                    id="arrival-date"
+                    type="date"
+                    class="form-input"
+                    required
+                  />
                 </div>
                 <div class="form-group">
-                  <label>Departure</label>
-                  <input type="date" class="form-input" required />
+                  <label for="departure-date">Departure</label>
+                  <input
+                    id="departure-date"
+                    type="date"
+                    class="form-input"
+                    required
+                  />
                 </div>
               </div>
               <div class="form-row">
@@ -1399,8 +1412,9 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label>Special Requests</label>
+                  <label for="special-requests">Special Requests</label>
                   <input
+                    id="special-requests"
                     type="text"
                     class="form-input"
                     placeholder="Dietary needs, occasions..."
@@ -1413,7 +1427,7 @@
             </form>
             <div class="booking__perks">
               <div>
-                <h4>Residency Advantages</h4>
+                <h3>Residency Advantages</h3>
                 <ul>
                   <li>Complimentary pre-arrival wellness consult</li>
                   <li>Private speedboat or seaplane transfers</li>
@@ -1572,7 +1586,10 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"
       defer
     ></script>
-    <script src="https://unpkg.com/split-type" defer></script>
+    <script
+      src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"
+      defer
+    ></script>
     <script src="js/main.js" defer></script>
   </body>
 </html>

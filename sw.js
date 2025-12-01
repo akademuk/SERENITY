@@ -1,4 +1,4 @@
-const CACHE_NAME = "serenity-bay-v3";
+const CACHE_NAME = "serenity-bay-v4";
 const ASSETS = [
   "./",
   "./index.html",
@@ -16,7 +16,7 @@ const ASSETS = [
   "https://unpkg.com/lenis@1.0.45/dist/lenis.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js",
-  "https://unpkg.com/split-type",
+  "https://unpkg.com/split-type@0.3.4/umd/index.min.js",
 ];
 
 self.addEventListener("install", (event) => {
