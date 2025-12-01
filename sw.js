@@ -10,13 +10,13 @@ const ASSETS = [
   "./assets/fonts/Montserrat-Regular-Latin.woff2",
   "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css",
   "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css",
-  "https://unpkg.com/lenis@1.0.45/dist/lenis.css",
+  "https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.css",
   "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js",
   "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js",
-  "https://unpkg.com/lenis@1.0.45/dist/lenis.min.js",
+  "https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js",
-  "https://unpkg.com/split-type@0.3.4/umd/index.min.js",
+  "https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js",
 ];
 
 self.addEventListener("install", (event) => {

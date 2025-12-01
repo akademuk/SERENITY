@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 1. Initialize Lenis (Smooth Scroll)
   const lenis = new Lenis({
-    duration: 1.5, // Slower, more luxurious scroll
+    duration: 1.2, // Optimized for performance
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     direction: "vertical",
     gestureDirection: "vertical",
@@ -112,7 +112,8 @@ document.addEventListener("DOMContentLoaded", () => {
     lenis.raf(time * 1000);
   });
 
-  gsap.ticker.lagSmoothing(0);
+  // Re-enable lag smoothing to prevent stutters
+  gsap.ticker.lagSmoothing(1000, 16);
 
   // 1.1 Smooth Scroll for Anchors
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -255,13 +256,13 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.from(text.chars, {
         scrollTrigger: {
           trigger: char,
-          start: "top 80%",
+          start: "top 90%", // Trigger earlier
           toggleActions: "play none none reverse",
         },
         y: 100,
         opacity: 0,
         rotation: 5,
-        duration: 1,
+        duration: 0.8, // Faster animation
         stagger: 0.03,
         ease: "power4.out",
       });
@@ -280,11 +281,11 @@ document.addEventListener("DOMContentLoaded", () => {
       {
         y: 0,
         opacity: 1,
-        duration: 1.2,
+        duration: 0.8, // Faster animation
         ease: "power3.out",
         scrollTrigger: {
           trigger: element,
-          start: "top 85%",
+          start: "top 90%", // Trigger earlier
         },
       }
     );
