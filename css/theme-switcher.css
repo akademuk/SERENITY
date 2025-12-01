@@ -1,0 +1,126 @@
+/* --- FLOATING THEME SWITCHER --- */
+.theme-switcher {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  font-family: var(--font-body);
+}
+
+.theme-switcher__toggle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-heading);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, background 0.3s;
+}
+
+.theme-switcher__toggle:hover {
+  transform: rotate(45deg);
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+.theme-switcher__panel {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 1.5rem;
+  border-radius: 16px;
+  width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.theme-switcher.active .theme-switcher__panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.theme-switcher__group {
+  margin-bottom: 1.5rem;
+}
+
+.theme-switcher__group:last-child {
+  margin-bottom: 0;
+}
+
+.theme-switcher__label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.theme-switcher__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.theme-btn {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.theme-btn::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.3;
+}
+
+.theme-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.theme-btn.active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+.theme-btn.active::before {
+  opacity: 1;
+  background: #fff;
+}
+
+/* Font Styles */
+body.font-serif {
+  --font-body: "Playfair Display", serif;
+  --font-heading: "Montserrat", sans-serif; /* Swap */
+}
+
+body.font-mono {
+  --font-body: "Courier New", monospace;
+  --font-heading: "Courier New", monospace;
+}
