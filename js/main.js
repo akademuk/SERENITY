@@ -35,8 +35,17 @@ document.addEventListener("DOMContentLoaded", () => {
     ".btn, .play-btn-large, .cartography__hotspot"
   );
   magneticBtns.forEach((btn) => {
+    let rect = btn.getBoundingClientRect();
+
+    btn.addEventListener("mouseenter", () => {
+      rect = btn.getBoundingClientRect();
+    });
+
+    window.addEventListener("resize", () => {
+      rect = btn.getBoundingClientRect();
+    });
+
     btn.addEventListener("mousemove", (e) => {
-      const rect = btn.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
 
@@ -70,27 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 0.5 Ghost Concierge (Scroll Direction)
   const ghostConcierge = document.getElementById("ghostConcierge");
-  let lastScrollY = window.scrollY;
-
-  if (ghostConcierge) {
-    window.addEventListener(
-      "scroll",
-      () => {
-        const currentScrollY = window.scrollY;
-
-        if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          // Scrolling Down
-          ghostConcierge.classList.add("hidden");
-        } else {
-          // Scrolling Up
-          ghostConcierge.classList.remove("hidden");
-        }
-
-        lastScrollY = currentScrollY;
-      },
-      { passive: true }
-    );
-  }
 
   // 1. Initialize Lenis (Smooth Scroll)
   const lenis = new Lenis({
@@ -105,7 +93,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Synchronize Lenis with GSAP ScrollTrigger
-  lenis.on("scroll", ScrollTrigger.update);
+  lenis.on("scroll", (e) => {
+    ScrollTrigger.update();
+
+    // Ghost Concierge Logic inside Lenis scroll event
+    if (ghostConcierge) {
+      if (e.direction === 1 && e.scroll > 100) {
+        // Scrolling Down
+        ghostConcierge.classList.add("hidden");
+      } else {
+        // Scrolling Up
+        ghostConcierge.classList.remove("hidden");
+      }
+    }
+  });
 
   gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
@@ -127,75 +128,147 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 2. Initialize Swiper (Dining)
-  const diningSwiper = new Swiper(".dining-slider", {
-    slidesPerView: 1,
-    spaceBetween: 30,
-    loop: true,
-    speed: 1000,
-    breakpoints: {
-      768: { slidesPerView: 2 },
-      1024: { slidesPerView: 3 },
-    },
-  });
+  // Helper Functions for Lazy Loading
+  const loadScript = (src) => {
+    return new Promise((resolve, reject) => {
+      if (document.querySelector(`script[src="${src}"]`)) {
+        resolve();
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  };
 
-  // 2.1 Initialize Swiper (Accommodations)
-  const accommodationsSwiper = new Swiper(".accommodations-slider", {
-    slidesPerView: 1,
-    spaceBetween: 30,
-    speed: 800,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    breakpoints: {
-      768: { slidesPerView: 2 },
-      1024: { slidesPerView: 3 },
-    },
-  });
+  const loadStyle = (href) => {
+    if (document.querySelector(`link[href="${href}"]`)) return;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    document.head.appendChild(link);
+  };
 
-  // 2.2 Initialize Nested Swiper (Accommodation Gallery)
-  const accommodationInnerSwiper = new Swiper(".accommodation-inner-slider", {
-    nested: true,
-    slidesPerView: 1,
-    spaceBetween: 0,
-    speed: 600,
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    effect: "fade",
-    fadeEffect: {
-      crossFade: true,
-    },
-  });
+  // 2. Lazy Load Swiper
+  const initSwipers = () => {
+    // 2. Initialize Swiper (Dining)
+    new Swiper(".dining-slider", {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      loop: true,
+      speed: 1000,
+      breakpoints: {
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      },
+    });
 
-  // 3. Initialize Fancybox
-  Fancybox.bind("[data-fancybox]", {
-    // Custom options
+    // 2.1 Initialize Swiper (Accommodations)
+    new Swiper(".accommodations-slider", {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      speed: 800,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      breakpoints: {
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      },
+    });
+
+    // 2.2 Initialize Nested Swiper (Accommodation Gallery)
+    new Swiper(".accommodation-inner-slider", {
+      nested: true,
+      slidesPerView: 1,
+      spaceBetween: 0,
+      speed: 600,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      effect: "fade",
+      fadeEffect: {
+        crossFade: true,
+      },
+    });
+  };
+
+  const swiperObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          loadStyle(
+            "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+          );
+          loadScript(
+            "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
+          ).then(initSwipers);
+          observer.disconnect();
+        }
+      });
+    },
+    { rootMargin: "200px" }
+  );
+
+  const swiperElements = document.querySelectorAll(".swiper");
+  if (swiperElements.length > 0) {
+    swiperObserver.observe(swiperElements[0]);
+  }
+
+  // 3. Lazy Load Fancybox
+  let fancyboxLoaded = false;
+  const loadFancybox = () => {
+    if (fancyboxLoaded) return Promise.resolve();
+    loadStyle(
+      "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
+    );
+    return loadScript(
+      "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"
+    ).then(() => {
+      fancyboxLoaded = true;
+      Fancybox.bind("[data-fancybox]", {
+        // Custom options
+      });
+    });
+  };
+
+  const fancyboxElements = document.querySelectorAll("[data-fancybox]");
+  fancyboxElements.forEach((el) => {
+    el.addEventListener("mouseenter", loadFancybox, { once: true });
+    el.addEventListener("touchstart", loadFancybox, { once: true });
+    el.addEventListener("focus", loadFancybox, { once: true });
   });
 
   // 4. GSAP Animations
   gsap.registerPlugin(ScrollTrigger);
 
   // A. Split Text Reveal (Headings)
-  const splitTypes = document.querySelectorAll("[data-split-text]");
-  splitTypes.forEach((char, i) => {
-    const text = new SplitType(char, { types: "words, chars" });
+  document.fonts.ready.then(() => {
+    const splitTypes = document.querySelectorAll("[data-split-text]");
+    splitTypes.forEach((char, i) => {
+      const text = new SplitType(char, { types: "words, chars" });
 
-    gsap.from(text.chars, {
-      scrollTrigger: {
-        trigger: char,
-        start: "top 80%",
-        toggleActions: "play none none reverse",
-      },
-      y: 100,
-      opacity: 0,
-      rotation: 5,
-      duration: 1,
-      stagger: 0.03,
-      ease: "power4.out",
+      gsap.from(text.chars, {
+        scrollTrigger: {
+          trigger: char,
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+        y: 100,
+        opacity: 0,
+        rotation: 5,
+        duration: 1,
+        stagger: 0.03,
+        ease: "power4.out",
+      });
     });
+
+    // Refresh ScrollTrigger after DOM changes
+    ScrollTrigger.refresh();
   });
 
   // B. Fade Up Elements
@@ -416,7 +489,9 @@ document.addEventListener("DOMContentLoaded", () => {
         bookingForm.reset();
 
         // Open Thank You Modal
-        Fancybox.show([{ src: "#modal-thank-you", type: "inline" }]);
+        loadFancybox().then(() => {
+          Fancybox.show([{ src: "#modal-thank-you", type: "inline" }]);
+        });
       }, 1500);
     });
   }
