@@ -256,13 +256,13 @@ document.addEventListener("DOMContentLoaded", () => {
       gsap.from(text.chars, {
         scrollTrigger: {
           trigger: char,
-          start: "top 90%", // Trigger earlier
+          start: "top 95%", // Trigger even earlier
           toggleActions: "play none none reverse",
         },
         y: 100,
         opacity: 0,
         rotation: 5,
-        duration: 0.8, // Faster animation
+        duration: 0.8,
         stagger: 0.03,
         ease: "power4.out",
       });
@@ -281,11 +281,11 @@ document.addEventListener("DOMContentLoaded", () => {
       {
         y: 0,
         opacity: 1,
-        duration: 0.8, // Faster animation
+        duration: 0.8,
         ease: "power3.out",
         scrollTrigger: {
           trigger: element,
-          start: "top 90%", // Trigger earlier
+          start: "top 95%", // Trigger even earlier
         },
       }
     );

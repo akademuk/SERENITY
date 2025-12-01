@@ -1,6 +1,5 @@
-const CACHE_NAME = "serenity-bay-v4";
+const CACHE_NAME = "serenity-bay-v5";
 const ASSETS = [
-  "./",
   "./index.html",
   "./css/style.min.css",
   "./css/fonts.css",
@@ -10,7 +9,6 @@ const ASSETS = [
   "./assets/fonts/Montserrat-Regular-Latin.woff2",
   "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css",
   "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css",
-  "https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.css",
   "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js",
   "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js",
   "https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js",
